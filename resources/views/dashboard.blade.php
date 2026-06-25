@@ -1,17 +1,34 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CryptoInvestment Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-blue-400">CryptoInvestment Live</h1>
+        
+        <table class="w-full bg-slate-800 rounded-lg overflow-hidden">
+            <thead class="bg-slate-700 text-left">
+                <tr>
+                    <th class="p-4">Moneda</th>
+                    <th class="p-4">Precio (USD)</th>
+                    <th class="p-4">Cambio 24h</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cryptos as $crypto)
+                <tr class="border-b border-slate-700">
+                    <td class="p-4">{{ $crypto->name }} ({{ $crypto->symbol }})</td>
+                    <td class="p-4">${{ number_format($crypto->price, 2) }}</td>
+                    <td class="p-4 {{ $crypto->percent_change_24h >= 0 ? 'text-green-400' : 'text-red-400' }}">
+                        {{ number_format($crypto->percent_change_24h, 2) }}%
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-</x-app-layout>
+</body>
+</html>
